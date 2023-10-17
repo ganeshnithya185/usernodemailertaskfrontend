@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext } from "react";
+import Home from "./Components/Home";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, Routes } from "react-router-dom";
+import Login from "./Components/Login";
+import Resetpassword from "./Components/Resetpassword";
+import { useState } from "react";
+import ForgotPassword from "./Components/Forgetpassword";
 
-function App() {
+export const myContext = createContext();
+
+const App = () => {
+  const [token, setToken] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div>
+      <myContext.Provider value={{ token, setToken }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forget" element={<ForgotPassword />} />
+          <Route path="/reset-password/:id/:token" element={<Resetpassword />} />
+        </Routes>
+      </myContext.Provider>
+    </div> 
   );
-}
+};
 
 export default App;
